@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /your_project_directory/
+
+# If the file or directory exists, let the server handle it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirect everything else to index.php
+RewriteRule ^(.*)$ index.php/$1 [L]
