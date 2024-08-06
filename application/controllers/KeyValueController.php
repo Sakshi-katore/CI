@@ -6,49 +6,58 @@ class KeyValueController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->helper('key_value'); // Load the custom helper
+        $this->load->helper('key_value_helper');
+    }
+
+    public function company_info() {
+        $this->load->view('company_info_view');
     }
 
     public function index() {
         $this->load->view('key_value_view');
     }
 
-    public function get_value($key) {
-        $data = get_value_from_db($key); // Use the helper function
-        if ($data) { // If the key was found in the database
-            echo json_encode($data); // Return the data as JSON
-        } else {
-            echo json_encode(array('error' => 'Key not found'));
-        }
-    }
-
     public function set_value() {
         $key = $this->input->post('key');
         $value = $this->input->post('value');
-        if (set_value_in_db($key, $value)) { // Use the helper function
+
+        // d-m-Y format
+        if (preg_match('/^\d{2}-\d{2}-\d{4}$/', $value)) {
+            $date = DateTime::createFromFormat('d-m-Y', $value);
+            if ($date) {
+                $value = $date->format('Y-m-d');
+            } else {
+                echo "Invalid date format";
+                return;
+            }
+        }
+
+        if (in_array($key, ['company_Number', 'company_number', 'companyNumber', 'companynumber'])) {
+            $value = format_phone_number($value);
+        }
+
+        if (set_company_info($key, $value)) {
             echo "Value set successfully";
         } else {
             echo "Failed to set value";
         }
     }
 
+    public function fetch_value() {
+        $key = $this->input->post('key');
+        $data['key'] = $key;
+        $data['value'] = get_company_info($key);
+
+        $this->load->view('key_value_view', $data);
+    }
+
     public function delete_value() {
         $key = $this->input->post('key');
-        if (delete_value_from_db($key)) { // Use the helper function
+        if (delete_company_info($key)) {
             echo "Value deleted successfully";
         } else {
             echo "Failed to delete value";
         }
-    }
-
-    public function view_value() {
-        $this->load->view('view_value_form');
-    }
-
-    public function fetch_value() {
-        $key = $this->input->post('key');
-        $data['value'] = get_value_from_db($key); // Use the helper function
-        $this->load->view('key_value_view', $data);
     }
 }
 ?>

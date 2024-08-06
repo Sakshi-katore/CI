@@ -124,5 +124,7 @@ $route['values/delete/(:any)'] = 'values/delete/$1';
 
 
 $route['default_controller'] = 'KeyValueController';
+$route['company_info'] = 'KeyValueController/company_info';
+
      $route['get/(:any)'] = 'KeyValueController/get_value/$1';
      $route['set'] = 'KeyValueController/set_value';

@@ -1,67 +1,68 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-// Function to get a value from the database for a given key
-function get_value_from_db($key) {
-    $C =& get_instance();
-    $C->load->database();
-    $C->db->limit(1); // Ensure only one row is fetched
-    $query = $C->db->get_where('key_value_store', array('key' => $key));
-    
-    return $query->row_array(); // Fetch a single row
+/*function get_company_phone() {
+    return get_value_from_db('company_Number');
 }
 
-// Function to set (insert or update) a value in the database for a given key
-function set_value_in_db($key, $value) {
-    $C =& get_instance();
-    $C->load->database();
+function get_company_name() {
+    return get_value_from_db('Company_name');
+}
 
-    // Check if the value is a date in dd-mm-yyyy or dd/mm/yyyy format and convert it to yyyy-mm-dd
-    if (preg_match('/^\d{2}[-\/]\d{2}[-\/]\d{4}$/', $value)) {
-        $value = convert_date_to_yyyy_mm_dd($value);
-    }
+function get_company_email() {
+    return get_value_from_db('email');
+}
 
-    // Check if the value is a mobile number and format it
-    if (preg_match('/^\d{10}$/', $value)) {
-        $value = format_mobile_number($value);
-    }
+function get_company_number() {
+    return get_value_from_db('Company_number');
+} */
 
-    $data = array(
-        'key' => $key,
-        'value' => $value
-    );
+function get_company_info($key) {
+    $CI =& get_instance();
+    $CI->load->database();
 
-    // Check if the key already exists in the 'key_value_store' table
-    $C->db->where('key', $key);
-    $query = $C->db->get('key_value_store');
+    $CI->db->limit(1);  //get one row
+    $query = $CI->db->get_where('key_value_store', array('key' => $key));  //select where key matches key!
 
-    if ($query->num_rows() > 0) {
-        // Key exists, update the existing value
-        $C->db->where('key', $key);
-        return $C->db->update('key_value_store', $data);
+    $result = $query->row_array();            //          fetches the query
+
+    return $result['value'] ?? 'Not available';
+}
+
+function set_company_info($key, $value) {
+    $CI =& get_instance();
+    $CI->load->database();
+    $data = array('value' => $value); //  prepares the data array that will be inserted or updated
+
+    if (key_exists_in_db($key)) {
+        $CI->db->where('key', $key);
+        return $CI->db->update('key_value_store', $data);
     } else {
-        // Key does not exist, insert a new key-value pair
-        return $C->db->insert('key_value_store', $data);
+        $data['key'] = $key;
+        return $CI->db->insert('key_value_store', $data);
     }
 }
 
-// Function to delete a value from the database for a given key
-function delete_value_from_db($key) {
-    $C =& get_instance();
-    $C->load->database();
-    $C->db->where('key', $key);
-    return $C->db->delete('key_value_store');
+function key_exists_in_db($key) {
+    $CI =& get_instance();
+    $CI->load->database();
+    $CI->db->limit(1);
+    $query = $CI->db->get_where('key_value_store', array('key' => $key));
+    return $query->num_rows() > 0;
 }
 
-// Function to convert date to yyyy-mm-dd format
-function convert_date_to_yyyy_mm_dd($date) {
-    $date = str_replace('/', '-', $date); // Replace '/' with '-' if present
-    return date('Y-m-d', strtotime($date));
+function delete_company_info($key) {
+    $CI =& get_instance();
+    $CI->load->database();
+    $CI->db->where('key', $key);
+    return $CI->db->delete('key_value_store');
 }
 
-// Function to format mobile number to +91 777 699 3990
-function format_mobile_number($number) {
-    return '+91 ' . substr($number, 0, 3) . ' ' . substr($number, 3, 3) . ' ' . substr($number, 6, 4);
+function format_phone_number($number) {
+    $number = preg_replace('/[^0-9]/', '', $number);
+    if (strlen($number) == 10) {
+        return '+91 ' . substr($number, 0, 3) . ' ' . substr($number, 3, 3) . ' ' . substr($number, 6, 4);
+    } else {
+        return $number;
+    }
 }
-
 ?>
