@@ -24,12 +24,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url'] = 'http://localhost:60/';
-// config.php
-define('TEMP_DIR', 'C:/inetpub/temp'); // Define the temporary directory path
-define('UPLOAD_DIR', 'C:/inetpub/uploads'); // Define the upload directory path
-define('LOG_DIR', 'C:/inetpub/logs'); // Define the log directory path
-$config['upload_dir'] = BASE_PATH . '/uploads';
-
 
 /*
 |--------------------------------------------------------------------------

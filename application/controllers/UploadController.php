@@ -6,7 +6,7 @@ class UploadController extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('upload');
-        $this->load->config('custom_config'); //loaded after defining constants
+
     }
 
     public function index() {
@@ -19,17 +19,25 @@ class UploadController extends CI_Controller {
         // print_r($_POST);
         // print_r($_FILES);
         // // exit();
+                
+        //$config['upload_path'] = './uploads/';
+
         $config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] .'/uploads';     // Use the path from config
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 2048; 
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-        
+        //$config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = 4096;  // 4MB
+        $config['max_width'] = 5000;  // Increased max width to 5000px
+        $config['max_height'] = 5000;  // Increased max height to 5000px
+
         //$config['upload_path'] = './uploads/';
         //$config['upload_path'] = './ci/uploads/';
         //$config['upload_path'] = 'E:/php working/CodeIgniter-3.1.13/ci/uploads/';
+
+
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
+
+
         // echo '<pre>';
         // print_r($this->upload->initialize($config));
         // exit();

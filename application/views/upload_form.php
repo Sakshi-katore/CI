@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Upload Form</title>
+    <meta charset="UTF-8">
+    <title>Upload Images</title>
 </head>
 <body>
-
-<?php if (isset($error) && $error != ''): ?>
-    <p><?php echo $error; ?></p>
-<?php endif; ?>
-
-<!---->
-<form method="POST" action="<?=base_url('uploadcontroller/do_upload');?>" enctype="multipart/form-data"> 
-<input type="text" name="name" />
-<input type="file" name="userfile" />
-
-<br /><br />
-
-<input type="submit" value="Upload" />
-
-</form>
-
+    <h1>School Gallery</h1>
+    <form action="<?php echo site_url('schoolgallery/upload_images'); ?>" method="post" enctype="multipart/form-data">
+        <input type="file" name="userfile[]" multiple>
+        <button type="submit">Upload</button>
+    </form>
 </body>
 </html>

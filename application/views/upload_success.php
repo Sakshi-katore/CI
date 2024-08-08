@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Success</title>
+    <title>Upload Successful</title>
 </head>
 <body>
-    <h3>Your file was successfully uploaded!</h3>
-    <ul>
-        <?php foreach ($upload_data as $item => $value):?>
-            <li><?php echo $item;?>: <?php echo $value;?></li>
-        <?php endforeach; ?>
-    </ul>
-    <p><?php echo anchor('upload', 'Upload Another File!'); ?></p>
+    <h1>Upload Successful!</h1>
+
+    <p>Your file has been uploaded successfully.</p>
+    
+    
+    <a href="<?php echo site_url('SchoolGallery/view_gallery'); ?>">Go to School Gallery  <br></a>
+    <a href="<?php echo site_url('TeacherGallery/view_gallery'); ?>">Go to Teacher Gallery</a>
+
 </body>
 </html>

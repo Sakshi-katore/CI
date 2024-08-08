@@ -51,6 +51,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
+// Route for handling file uploads
+$route['studentgallery/upload_images'] = 'studentgallery/upload_images'; 
+$route['studentgallery/view_gallery'] = 'studentgallery/view_gallery';
+//$route['studentgallery/fetch_student'] = 'SchoolGallery/fetch_student';
+$route['studentgallery/fetch_student'] = 'studentgallery/fetch_student';
+
 //$route['default_controller'] = 'events';  // Default controller
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
@@ -75,6 +81,7 @@ $route['marks/edit/(:any)'] = 'marks/edit/$1';
 $route['marks/delete/(:any)'] = 'marks/delete/$1';
 
 
+$route['multipleupload'] = 'mul_upload/multiple_upload';
 
 
 //$route['upload'] = 'UploadController/index';
@@ -123,8 +130,49 @@ $route['values/edit/(:any)'] = 'values/edit/$1';
 $route['values/delete/(:any)'] = 'values/delete/$1';
 
 
-$route['default_controller'] = 'KeyValueController';
+//$route['default_controller'] = 'KeyValueController';
 $route['company_info'] = 'KeyValueController/company_info';
 
      $route['get/(:any)'] = 'KeyValueController/get_value/$1';
      $route['set'] = 'KeyValueController/set_value';
+
+     //$route['gallery'] = 'mul_upload/gallery';
+     $route['gallery'] = 'Gallery_controller/index';
+
+    ;
+
+
+$route['multiple_upload'] = 'mul_upload/multiple_upload';
+$route['student_photo'] = 'student_photo/upload';
+$route['gallery/(:any)'] = 'gallery_controller/view_gallery/$1'; // Handles both student and school galleries
+
+
+//$route['default_controller'] = 'SchoolGallery/view_gallery'; // Set the default controller
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+
+
+$route['SchoolGallery'] = 'SchoolGallery/view_gallery'; 
+$route['SchoolGallery/upload_images'] = 'SchoolGallery/upload_images';
+$route['SchoolGallery/delete_image/(:num)'] = 'SchoolGallery/delete_image/$1'; 
+
+$route['StudentGallery'] = 'StudentGallery/view_student_gallery'; // View student gallery
+$route['StudentGallery/upload_student_photo'] = 'StudentGallery/upload_student_photo'; 
+$route['StudentGallery/delete_student_photo/(:num)'] = 'StudentGallery/delete_student_photo/$1'; 
+
+
+$route['default_controller'] = 'schoolgallery'; 
+
+
+$route['schoolgallery'] = 'schoolgallery/index'; 
+
+$route['schoolgallery/upload_images'] = 'schoolgallery/upload_images'; 
+$route['schoolgallery/view_gallery'] = 'schoolgallery/view_gallery';
+
+
+$route['studentgallery'] = 'studentgallery/index'; 
+
+$route['teachergallery'] = 'TeacherGallery/index';
+$route['teachergallery/upload_images'] = 'TeacherGallery/upload_images';
+$route['teachergallery/view_gallery'] = 'TeacherGallery/view_gallery';
+

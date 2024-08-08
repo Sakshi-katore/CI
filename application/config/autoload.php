@@ -93,7 +93,9 @@ $autoload['drivers'] = array();
 */
 //$autoload['helper'] = array('url', 'form', 'database'); //bcz we are using helper
 
-$autoload['helper'] = array('form', 'url', 'file');
+//$autoload['helper'] = array('form', 'url', 'file');
+$autoload['helper'] = array('form', 'url', 'upload_helper');
+
 
 
 /*
@@ -108,8 +110,8 @@ $autoload['helper'] = array('form', 'url', 'file');
 | config files.  Otherwise, leave it blank.
 |
 */
-//$autoload['config'] = array();
-$autoload['config'] = array('custom_config');
+$autoload['config'] = array();
+
 
 
 /*
